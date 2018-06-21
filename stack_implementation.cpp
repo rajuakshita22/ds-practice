@@ -1,67 +1,65 @@
 #include <iostream>
-#include <math.h>
-using namespace std;
 
-struct node{
-    int data;
-    node *next;
-}*ptr,*newptr,*top,*a;
-node *create_node(int);
-void push(node*);
-void pop();
-void display_stack(node *);
-int main() 
-{
-    int i;
-    char y='y',x='y';
-  while(y=='y'||y=='Y')
-    {
-        cin>>i;
-        newptr=create_node(i);
-        push(newptr);
-        cin>>y;
-    }
-display_stack(top);
-while(x=='y'||x=='Y'){
-    pop();
-    display_stack(top);
-    cin>>x;
-}
-return 0;
-}
-node *create_node(int i){
+using namespace std;
+class stack{
+    struct node{
+        int i;
+        node *next;
+    }*ptr,*newptr,*a;
+    node *create_node(int data){
     ptr=new node;
-    ptr->data=i;
+    ptr->i=data;
     ptr->next=NULL;
     return ptr;
-}
-void push(node *n){
-    if(top==NULL){top=n;}
-    else
-    {
-        n->next=top;
-        top=n;
     }
-    
-}
-void pop(){
-    if(top==NULL){cout<<"underflow";}
+    public:
+    node *top;
+    void push(int d);
+    void pop();
+    bool isempty();
+    void display(node *np){
+        while(np!=NULL){
+            cout<<np->i;
+            np=np->next;
+        }
+        cout<<"\n";
+    }
+    };
+    void stack::push(int d){
+        newptr=create_node(d);
+        if(isempty()){top=newptr;}
+        else{
+            newptr->next=top;
+            top=newptr;
+        }
+            
+    }
+    void stack::pop(){
+         if(isempty()){cout<<"underflow";}
     else{
         a=top;
         top=top->next;
         delete a;
     }
-}
-void display_stack(node *np)
-{
-    while(np!=NULL)
-    {
-        cout<<np->data;
-        np=np->next;
-        
     }
-    cout<<"\n";
-}
+    bool stack::isempty(){
+        if(top==NULL){return true;}
+        else return false;
+    }
     
-
+int main()
+{
+   stack s1;
+   int j;
+   char choice='y';
+   while(choice=='y'||choice=='Y'){
+       cin>>j;
+       s1.push(j);
+       cin>>choice;
+   }
+   s1.display(s1.top);
+   s1.pop();
+   s1.display(s1.top);
    
+   return 0;
+}
