@@ -1,68 +1,64 @@
 #include <iostream>
-#include <math.h>
-using namespace std;
 
+using namespace std;
 struct node{
-    int data;
-    node *next;
-}*ptr,*newptr,*front,*rear,*a;
-node *create_node(int);
-void enqueue(node*);
-void dequeue();
-void display_queue(node *);
-int main() 
-{
-    int i;
-    char y='y',x='y';
-    while(y=='y'||y=='Y')
-    {
-        cin>>i;
-        newptr=create_node(i);
-        enqueue(newptr);
-        cin>>y;
-    }
-display_queue(front);
-while(x=='y'||x=='Y'){
-    dequeue();
-    display_queue(front);
-    cin>>x;
-}
-return 0;
-}
-node *create_node(int i){
+        int i;
+        node *next;
+    }*ptr,*newptr,*a,*rear,*front;
+class queue{
+    node *create_node(int data){
     ptr=new node;
-    ptr->data=i;
+    ptr->i=data;
     ptr->next=NULL;
     return ptr;
-}
-void enqueue(node *n){
-    if(rear==NULL){front=rear=n;}
-    else
-    {
-        rear->next=n;
-        rear=n;
     }
-    
-}
-void dequeue(){
-    if(front==NULL){cout<<"underflow";}
+    public:
+    void enqueue(int d);
+    void dequeue();
+    bool isempty();
+    void display(node *np){
+        while(np!=NULL){
+            cout<<np->i;
+            np=np->next;
+        }
+        cout<<"\n";
+    }
+    };
+    void queue::enqueue(int d){
+        newptr=create_node(d);
+        if(isempty()){front=rear=newptr;}
+        else{
+            rear->next=newptr;
+            rear=newptr;
+        }
+            
+    }
+    void queue::dequeue(){
+         if(isempty()){cout<<"underflow";}
     else{
         a=front;
         front=front->next;
         delete a;
-        
     }
-}
-void display_queue(node *np)
-{
-    while(np!=NULL)
-    {
-        cout<<np->data;
-        np=np->next;
-        
     }
-    cout<<"\n";
-}
+    bool queue::isempty(){
+        if(front==NULL){return true;}
+        else return false;
+    }
     
-
+int main()
+{
+   queue q1;
+   int j;
+   char choice='y';
+   while(choice=='y'||choice=='Y'){
+       cin>>j;
+       q1.enqueue(j);
+       cin>>choice;
+   }
+   q1.display(front);
+   q1.dequeue();
+   q1.display(front);
    
+   return 0;
+}
