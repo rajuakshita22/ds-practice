@@ -2,22 +2,21 @@
 
 using namespace std;
 void merge(int[],int,int[],int);
+void merge_sort(int ar[],int start,int end)
  int main()
  {
-    int s1,s2,e1,e2;
-    cin>>s1>>s2;
-    int a[s1],b[s2];
-     for(int i=0;i<s1;i++)
-     {
-         cin>>e1;
-         a[i]=e1;
-     }
-     for(int j=0;j<s1;j++)
-     {
-         cin>>e2;
-         b[j]=e2;
-     }
-     merge(a,s1,b,s2);
+    int size,ele;
+    cin>>size;
+    int ar[size];
+    for(int i=0;i<size;i++){
+      cin>>ele;
+      ar[i]=ele;
+    }
+    merge_sort(ar,0,size-1);
+    for(int m=0;m<s3;m++)
+        {
+            cout<<ar[m];
+        }
  
      return 0;
  }
@@ -46,18 +45,18 @@ void merge(int[],int,int[],int);
       }
        while(q<s2)
       {
-          c[l]=b[q];
+          c[l]=b[q];O
           q++;
           l++;
       }
       
-      for(int m=0;m<s3;m++)
-        {
-            cout<<c[m];
-        }
-
-      
-      
-     
+      }
+ void merge_sort(int ar[],int start,int end){
+  if(start!=end){
+    int mid=(start+end)/2;
+    merge_sort(ar[],start,mid);
+    merge_sort(ar[mid+1],end);
+    merge(ar[],mid-start+1,ar[],end-mid)
+  }
  }
  

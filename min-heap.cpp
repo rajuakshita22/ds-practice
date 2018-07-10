@@ -1,86 +1,103 @@
-#include <iostream>
-#include<climits>
+#include<iostream>
+
 using namespace std;
 
-class heap
-{
-    int *heap_array;
-    int max_size;
+struct student{
+    char name;
+    int marks;
+};
+void swap(student arr[],int i,int j);
+class tfive{
+    int maxsize;
+    student *arr;
     int current_size;
 public:
-    heap(int size){
-        heap_array = new int[size];
-        max_size=size;
+    tfive()
+    {
+        maxsize=5;
+        arr=new student[maxsize];
         current_size=0;
     }
-    ~heap(){
-        delete heap_array;
+    ~tfive(){
+        delete arr;
     }
-    int top(){
+    student top(){
         if(current_size!=0){
-            return heap_array[0];
+            return arr[0];
         }
-        else return INT_MIN;
-        
+        //else return NULL;
     }
-    void swap(int *xp, int *yp)
+    void insertion(student s)
     {
-        int temp = *xp;
-        *xp = *yp;
-        *yp = temp;
-    }
-    void insertion(int number){
-        if(current_size<max_size){
-            heap_array[current_size]=number;
+        if(current_size<maxsize)
+        {
+            arr[current_size]=s;
             int child=current_size;
             int parent=(child-1)/2;
+            cout<<parent<<child<<endl;
             current_size++;
-            while(heap_array[child] < heap_array[parent] && parent>=0){
-                swap(&heap_array[child],&heap_array[parent]);
+            this->display();
+            while(parent>=0 && arr[parent].marks>arr[child].marks)
+            {
+                //swap(&arr[child],&arr[parent]);
+                swap(arr, child, parent);
+                cout<<"--";
+                this->display();
+                
                 child=parent;
                 parent=(child-1)/2;
             }
         }
-        else {cout<<"overflow";}
-    }
-    void deletion(){
-        int present=current_size-1;
-        cout<<heap_array[present]<<endl;
-        swap(&heap_array[0], &heap_array[present]);
-        present--;
-        int a = 0;
-        while((a*2 + 1) < (current_size-1)){
-            int left  = 2*a+1;
-            int right = 2*a+2;
-            int smallest = a;
-            if(left < present && heap_array[left] < heap_array[a]){
-                smallest = left;
+        else if(current_size==maxsize && s.marks>arr[0].marks)
+        {
+            arr[0]=s;
+            int a=0;
+            while((a*2 + 1) < (current_size) )
+            {
+                int left  = 2*a+1;
+                int right = 2*a+2;
+                int smallest = a;
+                if(left<current_size && arr[left].marks < arr[a].marks)
+                {
+                    smallest = left;
+                }
+                if(left<current_size &&arr[right].marks < arr[smallest].marks){
+
+                    smallest = right;
+                }
+                cout<<smallest<<",";
+                if(smallest==a){break;}
+                swap(arr, smallest, a);
+                a = smallest;
             }
-            if(right < present && heap_array[right] < heap_array[a]){
-                smallest = right;
-            }
-            swap(&heap_array[smallest], &heap_array[a]);
-            a = smallest;
         }
-        current_size--;
     }
-};
-
-int main()
-{
-    
-    heap h1(100);
-    h1.insertion(5);
-    cout<<h1.top()<<endl;
-    h1.insertion(2);
-    cout<<h1.top()<<endl;
-    h1.insertion(6);
-    cout<<h1.top()<<endl;
-    h1.insertion(1);
-    cout<<h1.top()<<endl;
-    h1.deletion();
-    cout<<h1.top()<<endl;
-    
-    return 0;
+    void display(){
+        for(int j=0;j<5;j++){
+            cout<<arr[j].name;
+        }
+        cout<<endl;
+    }
+}top_five;
+int main(){
+    int number,mks;
+    char nm;
+    cin>>number;
+    for(int i=0;i<number;i++){
+        student m;
+        cin>>nm;
+        m.name=nm;
+        cin>>mks;
+        m.marks=mks;
+        top_five.insertion(m);
+        top_five.display();
+    }
+   top_five.display();
+    return 0;   
 }
-
+void swap(student arr[],int i,int j)
+{
+    student temp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = temp;
+}
